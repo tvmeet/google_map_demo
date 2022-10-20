@@ -24,33 +24,39 @@ class _GoogleMapScreenProviderState extends State<GoogleMapScreenProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Google Location API'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: SearchTextFields.searchcontroller,
-              decoration: const InputDecoration(
-                hintText: ' Search palaces with name'
+    return Consumer<GoogleLocationNotifier>(
+      builder: (context, state, child){
+        return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text('Google Location API'),
+              ),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: SearchTextFields.searchcontroller,
+                      decoration: const InputDecoration(
+                          hintText: ' Search palaces with name'
+                      ),
+                    ),
+                    Expanded(
+                        child: ListView.builder(
+                          ///itemCount:placesList.length,
+                            itemBuilder: (context, index){
+                              return const ListTile(
+                                ////title: Text(placesList[index]['Description']),
+                              );
+                            })
+                    )
+                  ],
+                ),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                ///itemCount:placesList.length,
-                  itemBuilder: (context, index){
-                    return const ListTile(
-                      ////title: Text(placesList[index]['Description']),
-                    );
-                  })
-            )
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
