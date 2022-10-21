@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           getUserCurrentLocation().then((value) async {
-            print(value.latitude.toString()+" "+value.longitude.toString());
+            print("${value.latitude} ${value.longitude}");
             _marker.add(
               Marker(markerId: const MarkerId('1'),
               position: LatLng(value.longitude, value.longitude),

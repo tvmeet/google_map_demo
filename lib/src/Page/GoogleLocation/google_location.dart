@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:googlemap_demo/src/Element/textfield_class.dart';
 import 'package:googlemap_demo/src/Utils/Notifier/google_location_notifier.dart';
 import 'package:provider/provider.dart';
@@ -17,9 +18,10 @@ class _GoogleMapScreenProviderState extends State<GoogleMapScreenProvider> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<GoogleLocationNotifier>(context, listen: false).getSuggestion();
+    });
     super.initState();
-      var state = Provider.of<GoogleLocationNotifier>(context,listen: false);
-      state.initialiseHomeScreen();
   }
 
   @override
@@ -32,28 +34,50 @@ class _GoogleMapScreenProviderState extends State<GoogleMapScreenProvider> {
                 centerTitle: true,
                 title: const Text('Google Location API'),
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: SearchTextFields.searchcontroller,
-                      decoration: const InputDecoration(
-                          hintText: ' Search palaces with name'
-                      ),
-                    ),
-                    Expanded(
-                        child: ListView.builder(
-                          ///itemCount:placesList.length,
-                            itemBuilder: (context, index){
-                              return const ListTile(
-                                ////title: Text(placesList[index]['Description']),
-                              );
-                            })
-                    )
-                  ],
-                ),
-              ),
+               body:Stack(
+                 children: [
+                   GoogleMap(
+                       zoomGesturesEnabled: true,
+                       initialCameraPosition: CameraPosition(
+                          target: state.startLocation,
+                           zoom:14.0
+                       ),
+                     mapType: MapType.normal,
+                     onMapCreated: (GoogleMapController controller) {
+                      setState(() {
+                        state.controller.complete(controller);
+                      });
+                     },
+                   ),
+                   Padding(
+                     padding: const EdgeInsets.symmetric(vertical: 12),
+                     child: Column(
+                       children: [
+                         TextFormField(
+                           controller: SearchTextFields.searchcontroller,
+                           decoration: const InputDecoration(
+                               hintText: ' Search palaces with name'
+                           ),
+                         ),
+                         Expanded(
+                             child: ListView.builder(
+                                 shrinkWrap: true,
+                                 itemCount: state.placeList.length,
+                                 itemBuilder: (context, index){
+                                   return const ListTile(
+                                       // title: Stack
+                                       // Text(
+                                       // state.placeList.[index]),
+                                   );
+                                 })
+                         )
+                       ],
+                     ),
+                   ),
+                 ],
+               )
+
+
             ),
         );
       },
