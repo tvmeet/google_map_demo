@@ -72,13 +72,25 @@ class _MapScreenProviderState extends State<MapScreenProvider> {
   //   );
   //
   // }
+  late CameraPosition _initialPosition;
+
+  DetailsResult? startPosition;
+  DetailsResult? endPosition;
    
   @override
   void initState() {
     super.initState();
+
+    _initialPosition = CameraPosition(
+      target: LatLng(startPosition!.geometry!.location!.lat!,
+          startPosition!.geometry!.location!.lng!),
+      zoom: 10.4746,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var state = Provider.of<GoogleMapNotifier>(context,listen: false);
       state.autoCompleteSearch();
+
     });
   }
 
@@ -87,8 +99,8 @@ class _MapScreenProviderState extends State<MapScreenProvider> {
     Set<Marker> _markers = {
       Marker(
         markerId:  const MarkerId('start'),
-        position: LatLng(widget.startPosition!.geometry!.location!.lat!,
-                          widget.startPosition!.geometry!.location!.lng!),
+        position: LatLng(startPosition!.geometry!.location!.lat!,
+                         startPosition!.geometry!.location!.lng!),
       ),
     };
 
@@ -119,7 +131,7 @@ class _MapScreenProviderState extends State<MapScreenProvider> {
 
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: predictions.length,
+                      itemCount: state.predictions.length,
                       itemBuilder: (context, index){
                         return ListTile(
                           leading: const CircleAvatar(
@@ -128,26 +140,20 @@ class _MapScreenProviderState extends State<MapScreenProvider> {
                             ),
                           ),
                           title: (
-                              Text(predictions[index].description.toString())
+                              Text(
+                                  state.predictions[index].description.toString())
                           ),
                           onTap: () async {
-                            final placeId = predictions[index].placeId!;
-                            final details = await googlePlace.details.get(placeId);
+                            final placeId = state.predictions[index].placeId!;
+                            final details = await state.googlePlace.details.get(placeId);
                             if(details != null && details.result != null && mounted)
                             {
-                              if(startFocusNode.hasFocus){
+                              if(state.startFocusNode.hasFocus){
                                 setState(() {
-                                  startPosition = details.result;
-                                  startSearchFieldController.text = details.result!.name!;
-                                  predictions = [];
+                                  state.startPosition = details.result;
+                                  state.startSearchFieldController.text = details.result!.name!;
+                                  state.predictions = [];
                                 });
-                              }
-                              if(startPosition != null /*&& endPosition != null*/){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context)=> MapScreen(startPosition: startPosition, /*endPosition: endPosition*/))
-                                );
                               }
                             }
                           },
@@ -157,7 +163,6 @@ class _MapScreenProviderState extends State<MapScreenProvider> {
                 ],
               )
           );
-
     });
   }
 }

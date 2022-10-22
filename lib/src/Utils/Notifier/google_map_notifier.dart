@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_place/google_place.dart';
+import 'package:googlemap_demo/src/Constant/app_keys.dart';
 
 class GoogleMapNotifier extends ChangeNotifier {
   late CameraPosition _initialPosition;
@@ -29,8 +30,8 @@ class GoogleMapNotifier extends ChangeNotifier {
   //   /// endFocusNode = FocusNode();
   // }
   void autoCompleteSearch(String value) async {
-    String apiKey = 'AIzaSyBoz3j8mkWt64YQYLNEEln3Eg0mUMRJ-2I';
-    googlePlace = GooglePlace(apiKey);
+
+    googlePlace = GooglePlace(googleMapKEYs.kPLACES_API_KEY );
     startFocusNode = FocusNode();
 
     var result = await googlePlace.autocomplete.get(value);
@@ -41,11 +42,4 @@ class GoogleMapNotifier extends ChangeNotifier {
     }
   }
 
-  void initState() {
-    _initialPosition = CameraPosition(
-      target: LatLng(startPosition!.geometry!.location!.lat!,
-          startPosition!.geometry!.location!.lng!),
-      zoom: 10.4746,
-    );
-  }
 }
