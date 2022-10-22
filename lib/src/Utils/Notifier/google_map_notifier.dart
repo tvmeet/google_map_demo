@@ -6,7 +6,6 @@ import 'package:google_place/google_place.dart';
 import 'package:googlemap_demo/src/Constant/app_keys.dart';
 
 class GoogleMapNotifier extends ChangeNotifier {
-  late CameraPosition _initialPosition;
 
   final startSearchFieldController = TextEditingController();
 
@@ -33,7 +32,6 @@ class GoogleMapNotifier extends ChangeNotifier {
 
     googlePlace = GooglePlace(googleMapKEYs.kPLACES_API_KEY );
     startFocusNode = FocusNode();
-
     var result = await googlePlace.autocomplete.get(value);
     print(result);
     if (result != null && result.predictions != null) {

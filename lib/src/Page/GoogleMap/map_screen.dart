@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -89,7 +91,7 @@ class _MapScreenProviderState extends State<MapScreenProvider> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var state = Provider.of<GoogleMapNotifier>(context,listen: false);
-      state.autoCompleteSearch();
+      state.autoCompleteSearch(toString());
 
     });
   }
