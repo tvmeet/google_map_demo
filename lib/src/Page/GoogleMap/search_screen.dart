@@ -4,7 +4,6 @@
 // import 'package:google_place/google_place.dart';
 // import 'package:googlemap_demo/src/Page/GoogleMap/map_screen.dart';
 //
-//
 // class SearchScreen extends StatefulWidget {
 //   const SearchScreen({Key? key}) : super(key: key);
 //
@@ -104,40 +103,40 @@
 //               }
 //             ),
 //             const SizedBox(height: 10),
-//             // TextField(
-//             //   focusNode: endFocusNode,
-//             //   enabled: startSearchFieldController.text.isNotEmpty && startPosition != null,
-//             //   onChanged:(value){
-//             //     if(_debounce?.isActive ?? false)_debounce!.cancel();
-//             //     _debounce = Timer(const Duration(microseconds: 1000),(){
-//             //       if(value.isNotEmpty){
-//             //         autoCompleteSearch(value);
-//             //       }else{
-//             //         setState(() {
-//             //           predictions = [];
-//             //           endPosition = null;
-//             //         });
-//             //       }
-//             //     });
-//             //   } ,
-//             //   style: const TextStyle(fontSize: 24),
-//             //   controller: enadSearchFieldController,
-//             //   decoration: InputDecoration(
-//             //       hintText: 'End Point',
-//             //       hintStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
-//             //       filled: true,
-//             //       fillColor: Colors.grey[200],
-//             //       border: InputBorder.none,
-//             //       suffixIcon:  enadSearchFieldController.text.isNotEmpty
-//             //           ?IconButton(onPressed: (){
-//             //                setState(() {
-//             //                 predictions = [];
-//             //                 enadSearchFieldController.clear();
-//             //            });
-//             //           }, icon:const Icon(Icons.clear_rounded),
-//             //      ): null
-//             //   ),
-//             //   ),
+//             TextField(
+//               //focusNode: endFocusNode,
+//               enabled: startSearchFieldController.text.isNotEmpty && startPosition != null,
+//               onChanged:(value){
+//                 if(_debounce?.isActive ?? false)_debounce!.cancel();
+//                 _debounce = Timer(const Duration(microseconds: 1000),(){
+//                   if(value.isNotEmpty){
+//                     autoCompleteSearch(value);
+//                   }else{
+//                     setState(() {
+//                       predictions = [];
+//                       endPosition = null;
+//                     });
+//                   }
+//                 });
+//               } ,
+//               style: const TextStyle(fontSize: 24),
+//               ///controller: enadSearchFieldController,
+//               decoration: InputDecoration(
+//                   hintText: 'End Point',
+//                   hintStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+//                   filled: true,
+//                   fillColor: Colors.grey[200],
+//                   border: InputBorder.none,
+//                   suffixIcon:  enadSearchFieldController.text.isNotEmpty
+//                       ?IconButton(onPressed: (){
+//                            setState(() {
+//                             predictions = [];
+//                             enadSearchFieldController.clear();
+//                        });
+//                       }, icon:const Icon(Icons.clear_rounded),
+//                  ): null
+//               ),
+//               ),
 //             ListView.builder(
 //                 shrinkWrap: true,
 //                 itemCount: predictions.length,
@@ -174,7 +173,7 @@
 //                             Navigator.push(
 //                               context,
 //                               MaterialPageRoute(
-//                                 builder: (context)=> MapScreen(startPosition: startPosition, /*endPosition: endPosition*/))
+//                                 builder: (context)=> MapScreen(/*startPosition: startPosition*/ /*endPosition: endPosition*/))
 //                             );
 //                           }
 //                         }
