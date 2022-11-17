@@ -1,5 +1,11 @@
 String appName = "DemoFirebaseFunction";
 ///ApiStrings
+///
+
+class MapScreenString{
+  static const search = "Search";
+}
+
 class ApiStrings{
   static const somethingWentWrong = "Something went wrong!";
   static const communicationMsg = "Error occured while Communication with Server with StatusCode :";

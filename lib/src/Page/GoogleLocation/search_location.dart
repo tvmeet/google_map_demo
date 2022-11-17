@@ -1,3 +1,66 @@
+import 'package:flutter/material.dart';
+import 'package:googlemap_demo/src/Constant/app_strings.dart';
+import 'package:googlemap_demo/src/Element/textfield_class.dart';
+import 'package:googlemap_demo/src/Widget/textbox_widget.dart';
+import 'package:provider/provider.dart';
+
+import '../../Constant/app_keys.dart';
+import '../../Utils/Notifier/google_location_notifier.dart';
+
+SearchPlacesScreen() => ChangeNotifierProvider<MapNotifier>(create: (_)=> MapNotifier(),child: const SearchPlacesProvider(),);
+
+class SearchPlacesProvider extends StatefulWidget {
+  const SearchPlacesProvider({Key? key}) : super(key: key);
+
+  @override
+  State<SearchPlacesProvider> createState() => _SearchPlacesProviderState();
+}
+
+class _SearchPlacesProviderState extends State<SearchPlacesProvider> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<MapNotifier>(
+        builder: (context, state, child) {
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      customTextField(hintText: MapScreenString.search)
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child:state.placeList.isNotEmpty ?
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.placeList.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          onTap: (){
+                            SearchTextFields.searchcontroller.text = state.placeList[index][PlacesSearchKey.description];
+                            state.navigateToMapScreen(context);
+                            state.selectLong = true;
+                            state.addressToGetLatLong();
+                          },
+                          title: Text(state.placeList[index][PlacesSearchKey.description]),
+                        );
+                      },
+                    ):
+                    Container(),
+                  )
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+}
+
 // // ignore_for_file: must_be_immutable
 //
 // import 'dart:async';
@@ -151,3 +214,4 @@
 //     return false;
 //   }
 // }
+

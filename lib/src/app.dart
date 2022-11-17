@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:googlemap_demo/src/Page/GoogleLocation/google_location.dart';
+import 'package:googlemap_demo/src/Page/GoogleLocation/google_Map_Screen_vc.dart';
+
 import 'Repository/Services/Navigation/navigation_service.dart';
 
 class MyApp extends StatefulWidget {
@@ -14,7 +15,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: NavigationService.navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: GoogleMapScreen(),
+      home: MapScreen(),
       themeMode: ThemeMode.light,
       theme: ThemeData(
         primaryColor: Colors.white,
